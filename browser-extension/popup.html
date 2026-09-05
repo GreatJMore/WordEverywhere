@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单词随行</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="logo">词</div>
+      <div class="top-text">
+        <h1>单词随行</h1>
+        <p>四六级浏览助手</p>
+      </div>
+      <button id="openTabBtn" class="link-btn" title="在新标签页打开学习页">打开学习页</button>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="learn">背单词</button>
+      <button class="tab" data-tab="quiz">测验</button>
+      <button class="tab" data-tab="settings">设置</button>
+    </nav>
+
+    <section id="tab-learn" class="tab-page active">
+      <div class="stat-row">
+        <div class="stat"><b id="todayCount">0</b><span>今日已见</span></div>
+        <div class="stat"><b id="learnedCount">0</b><span>已认识</span></div>
+        <div class="stat"><b id="masteredCount">0</b><span>已熟练</span></div>
+      </div>
+      <div class="card" id="learnCard">
+        <div class="badge" id="badge">CET4</div>
+        <div class="word-line">
+          <span class="word" id="word">…</span>
+          <span class="phonetic" id="phonetic"></span>
+        </div>
+        <div id="meaning" class="meaning"></div>
+        <div class="example">
+          <p id="exampleEn"></p>
+          <p id="exampleZh"></p>
+        </div>
+        <div class="actions">
+          <button id="knownBtn" class="btn green">认识</button>
+          <button id="againBtn" class="btn orange">再学</button>
+        </div>
+        <button id="mistakeLink" class="link-btn mistake-link">查看错词本 (0)</button>
+      </div>
+      <p class="hint">快捷键 Alt+Shift+W 可在网页里开关浮窗</p>
+    </section>
+
+    <section id="tab-quiz" class="tab-page">
+      <div class="quiz-head">
+        <b id="quizWord">…</b>
+        <span id="quizScore">对 0 / 0</span>
+      </div>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizFeedback" class="quiz-feedback"></div>
+    </section>
+
+    <section id="tab-settings" class="tab-page">
+      <div class="setting-row">
+        <label>参与学习的词库</label>
+        <span id="selectedBankCount" class="selection-count"></span>
+      </div>
+      <div id="popupBankCheckboxes" class="popup-bank-checkboxes"></div>
+      <div class="setting-row">
+        <label>切页名言</label>
+        <label class="switch">
+          <input type="checkbox" id="quoteToggle" checked>
+          <span></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <label>名言最小间隔</label>
+        <select id="quoteGapSel">
+          <option value="1">1 分钟</option>
+          <option value="3">3 分钟</option>
+          <option value="5" selected>5 分钟</option>
+          <option value="10">10 分钟</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label>自动更换间隔</label>
+        <select id="autoGapSel">
+          <option value="30">30 秒</option>
+          <option value="60" selected>1 分钟</option>
+          <option value="120">2 分钟</option>
+          <option value="300">5 分钟</option>
+        </select>
+      </div>
+      <p class="hint">学习进度与设置会保存在浏览器本地。</p>
+    </section>
+  </div>
+  <script src="words.js"></script>
+  <script src="ww-common.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

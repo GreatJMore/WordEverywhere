@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单词随行 · 学习页</title>
+  <link rel="stylesheet" href="learn.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">词</div>
+      <div>
+        <h1>单词随行</h1>
+        <p>四六级浏览助手 · 学习页</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="bank-picker">
+        <button id="bankPickerBtn" class="ghost-btn" aria-expanded="false">选择词库</button>
+        <div id="bankPickerPanel" class="bank-picker-panel" hidden>
+          <div class="picker-title"><b>参与学习的词库</b><button id="selectAllBanksBtn" class="text-btn">全选</button></div>
+          <div id="bankCheckboxes" class="bank-checkboxes"></div>
+        </div>
+      </div>
+      <button id="nextBtn" class="ghost-btn">换一个单词</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button id="tabLearn" class="tab active">背单词</button>
+    <button id="tabQuiz" class="tab">四选一</button>
+    <button id="tabReview" class="tab">每日复习 <span id="reviewTabCount">0</span></button>
+    <button id="tabMistakes" class="tab">错词本 <span id="mistakeTabCount">0</span></button>
+  </nav>
+
+  <main class="layout">
+    <div class="main-panel">
+      <section id="learnView" class="view-panel">
+        <div id="learnWordHost">
+          <section id="wordCard" class="card learn-card">
+            <div class="card-head">
+              <span class="badge" id="badge">CET4</span>
+              <span class="hint" id="reviewModeLabel">普通学习 · 按 1=认识 · 2=再学 · 空格=换词</span>
+            </div>
+            <div class="word-line">
+              <span class="word" id="word">…</span>
+              <span class="phonetic" id="phonetic"></span>
+            </div>
+            <div id="meaning" class="meaning"></div>
+            <div class="example">
+              <p id="exampleEn"></p>
+              <p id="exampleZh"></p>
+            </div>
+            <div class="actions">
+              <button id="knownBtn" class="btn green">认识 ✓</button>
+              <button id="againBtn" class="btn orange">再学 ↻</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="quizView" class="view-panel" hidden>
+        <section class="card quiz-card quiz-page-card">
+          <div class="quiz-head">
+            <div>
+              <h2>四选一测验</h2>
+              <p class="section-caption">根据英文单词选择对应的中文释义。</p>
+            </div>
+            <span id="quizScore">对 0 / 0</span>
+          </div>
+          <div class="quiz-word" id="quizWord">…</div>
+          <div id="quizOptions" class="quiz-options"></div>
+          <div id="quizFeedback" class="quiz-feedback"></div>
+        </section>
+      </section>
+
+      <section id="reviewView" class="view-panel" hidden>
+        <section class="card review-card review-page-card">
+          <div class="review-head">
+            <div>
+              <h2>每日错题温习</h2>
+              <p class="section-caption">按顺序完成单词复习、四选一和词语补全。</p>
+            </div>
+            <div class="review-count"><b id="reviewDueCount">0</b><span>个待复习</span></div>
+          </div>
+          <p id="reviewSummary">根据艾宾浩斯间隔安排今天到期的单词。</p>
+          <div class="review-steps" aria-label="每日复习进度">
+            <span id="reviewStepWords" class="review-step active">1 单词复习</span>
+            <span id="reviewStepQuiz" class="review-step">2 四选一</span>
+            <span id="reviewStepCompletion" class="review-step">3 词语补全</span>
+          </div>
+        </section>
+        <div id="reviewWordHost" class="review-word-host">
+          <section id="reviewWordCard" class="card learn-card review-learn-card" hidden>
+            <div class="card-head">
+              <span class="badge" id="reviewBadge">CET4</span>
+              <span class="hint" id="reviewModeText">每日复习</span>
+            </div>
+            <div class="word-line">
+              <span class="word" id="reviewWord">…</span>
+              <span class="phonetic" id="reviewPhonetic"></span>
+            </div>
+            <div id="reviewMeaning" class="meaning"></div>
+            <div class="example">
+              <p id="reviewExampleEn"></p>
+              <p id="reviewExampleZh"></p>
+            </div>
+            <div class="actions">
+              <button id="reviewKnownBtn" class="btn green">认识 ✓</button>
+              <button id="reviewAgainBtn" class="btn orange">再学 ↻</button>
+            </div>
+          </section>
+        </div>
+
+        <section id="reviewQuizPanel" class="card review-exercise-card" hidden>
+          <div class="exercise-head">
+            <div>
+              <h2>第二步：四选一</h2>
+              <p class="section-caption">选择刚才复习单词的中文释义。</p>
+            </div>
+            <span id="reviewQuizScore">对 0 / 0</span>
+          </div>
+          <div id="reviewQuizWord" class="quiz-word">…</div>
+          <div id="reviewQuizOptions" class="quiz-options"></div>
+          <div id="reviewQuizFeedback" class="quiz-feedback"></div>
+        </section>
+
+        <section id="reviewCompletionPanel" class="card review-exercise-card" hidden>
+          <div class="exercise-head">
+            <div>
+              <h2>第三步：词语补全</h2>
+              <p class="section-caption">根据中文释义，补全英文单词。</p>
+            </div>
+            <span id="reviewCompletionScore">对 0 / 0</span>
+          </div>
+          <div id="reviewCompletionMeaning" class="completion-meaning">…</div>
+          <div id="reviewCompletionPrompt" class="completion-prompt">…</div>
+          <div class="completion-answer">
+            <input id="reviewCompletionInput" class="completion-input" type="text" autocomplete="off" spellcheck="false" placeholder="输入完整单词或缺失字母" aria-label="补全英文单词">
+            <button id="reviewCompletionBtn" class="review-btn">提交答案</button>
+          </div>
+          <div id="reviewCompletionFeedback" class="quiz-feedback"></div>
+        </section>
+
+        <section id="reviewResultPanel" class="card review-result-card" hidden>
+          <div class="review-result-icon">✓</div>
+          <div>
+            <h2>今日复习完成</h2>
+            <p id="reviewResultSummary">本轮复习已完成。</p>
+            <p class="review-result-hint">可以切换到其他板块继续学习。</p>
+          </div>
+        </section>
+      </section>
+
+      <section id="mistakeView" class="mistake-view view-panel" hidden>
+        <div class="mistake-head">
+          <h2>错词本</h2>
+          <span class="mistake-desc">点过「再学」或测验答错的单词会收在这里，点「掌握」即可移除。</span>
+          <button id="exportMistakesBtn" class="ghost-btn">导出错词</button>
+          <button id="importMistakesBtn" class="ghost-btn">导入错词</button>
+          <button id="clearMistakesBtn" class="ghost-btn danger">清空错词本</button>
+        </div>
+        <div id="mistakeList" class="mistake-list"></div>
+        <div id="mistakeEmpty" class="mistake-empty">还没有错词，继续加油！</div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section class="card stat-card">
+        <h2>今日进度</h2>
+        <div class="stats">
+          <div class="stat"><b id="todayCount">0</b><span>今日已见</span></div>
+          <div class="stat"><b id="learnedCount">0</b><span>已认识</span></div>
+          <div class="stat"><b id="masteredCount">0</b><span>已熟练</span></div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <section class="custom-tools">
+    <div>
+      <h2>自定义词库</h2>
+      <p>每次导入会创建独立词库，可与内置词库任意组合使用。</p>
+    </div>
+    <div class="custom-actions">
+      <input id="customBankName" class="bank-name-input" type="text" maxlength="30" placeholder="填写词库名称">
+      <button id="importWordsBtn" class="ghost-btn">导入词库</button>
+      <input id="importMistakesFile" type="file" accept=".json,application/json" hidden>
+      <input id="importWordsFile" type="file" accept=".json,.csv,text/csv,application/json" hidden>
+    </div>
+    <div id="customBankList" class="custom-bank-list"></div>
+  </section>
+
+  <details class="advanced-settings">
+    <summary>高级设置</summary>
+    <section class="debug-tools">
+      <div>
+        <h2>复习调试台</h2>
+        <p>只推进插件内的学习时间；恢复真实时间时会还原进度快照，不修改系统时间。</p>
+      </div>
+      <div class="debug-actions">
+        <label>推进 <input id="debugDaysInput" type="number" min="0" max="365" value="1"> 天</label>
+        <button id="advanceDaysBtn" class="ghost-btn">推进</button>
+        <button id="resetDaysBtn" class="ghost-btn">恢复真实时间</button>
+        <b id="debugDateLabel"></b>
+      </div>
+    </section>
+  </details>
+
+  <footer class="footer">
+    <span id="bankInfo">词库加载中…</span>
+  </footer>
+
+  <script src="words.js"></script>
+  <script src="ww-common.js"></script>
+  <script src="learn.js"></script>
+</body>
+</html>

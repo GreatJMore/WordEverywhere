@@ -1,0 +1,248 @@
+:root {
+  --ww-bg: #fffdf7;
+  --ww-border: #d9e8e3;
+  --ww-accent: #2f8f75;
+  --ww-accent-dark: #24715d;
+  --ww-text: #27333d;
+  --ww-muted: #7b8a95;
+  --ww-green: #35a06b;
+  --ww-orange: #e88b3a;
+  --ww-shadow: rgba(20, 40, 50, 0.18);
+}
+
+.ww-panel {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2147483646;
+  width: 330px;
+  background: var(--ww-bg);
+  border: 1px solid var(--ww-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--ww-shadow);
+  font-family: "Microsoft YaHei UI", "PingFang SC", "Segoe UI", sans-serif;
+  color: var(--ww-text);
+  overflow: hidden;
+  user-select: none;
+}
+
+.ww-panel[data-dragging="true"] {
+  cursor: grabbing;
+  box-shadow: 0 14px 34px rgba(20, 40, 50, 0.24);
+}
+
+.ww-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #eaf7f1, #f3f8fc);
+  border-bottom: 1px solid var(--ww-border);
+  cursor: grab;
+}
+
+.ww-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ww-accent-dark);
+}
+
+.ww-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #e2f4ec;
+  color: var(--ww-accent-dark);
+}
+
+.ww-icon-btn {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ww-muted);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ww-icon-btn:hover {
+  background: rgba(47, 143, 117, 0.12);
+  color: var(--ww-accent);
+}
+
+.ww-body {
+  padding: 14px 16px 12px;
+}
+
+.ww-word-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.ww-word {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1f6f5c;
+  letter-spacing: 0;
+}
+
+.ww-phonetic {
+  font-size: 12px;
+  color: var(--ww-muted);
+}
+
+.ww-meaning {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ww-meaning b {
+  color: var(--ww-accent);
+  margin-right: 8px;
+}
+
+.ww-meaning .pos-tag {
+  color: var(--ww-accent);
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.ww-example {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px dashed #e5ece9;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #46545f;
+}
+
+.ww-example-zh {
+  margin-top: 3px;
+  color: var(--ww-muted);
+}
+
+.ww-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ww-btn {
+  flex: 1;
+  height: 30px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+.ww-btn-known {
+  background: var(--ww-green);
+}
+
+.ww-btn-again {
+  background: var(--ww-orange);
+}
+
+.ww-btn:hover {
+  filter: brightness(1.06);
+}
+
+.ww-foot {
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--ww-muted);
+  border-top: 1px solid #eef2f1;
+}
+
+.ww-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2147483646;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #35a06b, #2f8f75);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(47, 143, 117, 0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.ww-panel.ww-pop {
+  animation: ww-pop 0.22s ease;
+}
+
+@keyframes ww-pop {
+  0% { transform: scale(0.96); }
+  60% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.ww-quote {
+  position: fixed;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  width: min(620px, calc(100vw - 40px));
+  background: rgba(22, 34, 42, 0.92);
+  color: #f5f8f7;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  font-family: Georgia, "Times New Roman", "Microsoft YaHei UI", serif;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.ww-quote[data-visible="true"] {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ww-quote-en {
+  font-size: 17px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.ww-quote-zh {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #c7d3cf;
+}
+
+@media (max-width: 520px) {
+  .ww-panel {
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    width: auto;
+  }
+  .ww-quote {
+    top: 36px;
+    width: calc(100vw - 24px);
+    padding: 12px 14px;
+  }
+  .ww-quote-en {
+    font-size: 14px;
+  }
+}

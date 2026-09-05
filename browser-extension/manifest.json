@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "单词随行 · 四六级浏览助手",
+  "version": "1.1.0",
+  "description": "浏览网页时自动学习四六级单词，切换页面时弹出英文名人名言。",
+  "permissions": ["storage", "activeTab", "tabs"],
+  "options_page": "learn.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "单词随行"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+W"
+      },
+      "description": "显示/隐藏单词浮窗"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["words.js", "ww-common.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
